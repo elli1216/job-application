@@ -5,10 +5,53 @@ generator client {
 
 datasource db {
   provider = "postgresql"
+  // url      = env("DATABASE_URL")
 }
 
-model Todo {
-  id        Int      @id @default(autoincrement())
-  title     String
+enum ApplicationStatus {
+  To_Apply
+  Applied
+  Interviewing
+  Offered
+  Rejected
+  Accepted
+  No_Response
+}
+
+model Applications {
+  uuid         String            @id @default(uuid())
+  company_name String
+  job_title    String
+  date_applied DateTime
+  status       ApplicationStatus @default(To_Apply)
+  job_link     String            @default("")
+  notes        String            @default("")
+  userId       String
+  jobTypeId    String
+  createdAt    DateTime          @default(now())
+
+  @@index([userId])
+  @@index([jobTypeId])
+}
+
+model Users {
+  uuid      String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+}
+
+model Sessions {
+  uuid      String   @id @default(uuid())
+  userId    String
+  token     String   @unique
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+}
+
+model JobTypes {
+  uuid      String   @id @default(uuid())
+  name      String   @unique
   createdAt DateTime @default(now())
 }
