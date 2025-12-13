@@ -6,10 +6,6 @@ import {
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
 import { TanStackDevtools } from '@tanstack/react-devtools'
 
-import Header from '../features/common/components/Header'
-
-import { AppSidebar } from '../features/common/components/AppSidebar'
-import { SidebarInset, SidebarProvider } from '../components/ui/sidebar'
 import TanStackQueryDevtools from '../integrations/tanstack-query/devtools'
 
 import ClerkProvider from '../integrations/clerk/provider'
@@ -19,6 +15,7 @@ import appCss from '../styles.css?url'
 import type { QueryClient } from '@tanstack/react-query'
 
 import { ThemeProvider } from '../features/common/components/theme-provider'
+import { Button } from '@/components/ui/button'
 
 interface MyRouterContext {
   queryClient: QueryClient
@@ -49,8 +46,11 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
   shellComponent: RootDocument,
   notFoundComponent: () => {
     return (
-      <div>
-        <p>Not Found</p>
+      <div className='flex flex-col gap-4 justify-center items-center h-screen'>
+        <p className='text-lg font-semibold'>404: Page Not Found</p>
+        <Button className='ml-4' asChild>
+          <a href='/'>Go Home</a>
+        </Button>
       </div>
     )
   },
@@ -65,13 +65,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       <body>
         <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
           <ClerkProvider>
-            <SidebarProvider>
-              <AppSidebar />
-              <SidebarInset>
-                <Header />
-                {children}
-              </SidebarInset>
-            </SidebarProvider>
+            {children}
             <TanStackDevtools
               config={{
                 position: 'bottom-right',

@@ -7,7 +7,7 @@ export const Route = createFileRoute('/login')({
 
 function RouteComponent() {
   return (
-    <div className="p-4">
+    <div className="flex items-center justify-center h-screen p-4">
       <SignIn />
     </div>
   )
