@@ -13,7 +13,7 @@ export default function Header() {
           <div className="flex items-center gap-4">
             <SidebarTrigger />
             <h1 className="text-xl font-semibold">
-              <Link to="/">Job App Tracker</Link>
+              <Link to="/">Jobinator</Link>
             </h1>
           </div>
           <div className="flex items-center gap-2">
