@@ -1,6 +1,9 @@
 import { SidebarTrigger } from '@/components/ui/sidebar'
 import { Link } from '@tanstack/react-router'
 import { ModeToggle } from './mode-toggle'
+import { Button } from '@/components/ui/button'
+import { SignOutButton } from '@clerk/clerk-react'
+import { LogOut } from 'lucide-react'
 
 export default function Header() {
   return (
@@ -13,7 +16,13 @@ export default function Header() {
               <Link to="/">Job App Tracker</Link>
             </h1>
           </div>
-          <ModeToggle />
+          <div className="flex items-center gap-2">
+            <ModeToggle />
+            <SignOutButton>
+              <Button variant="outline"><LogOut className="h-4 w-4" />
+              </Button>
+            </SignOutButton>
+          </div>
         </div>
       </header>
     </>
