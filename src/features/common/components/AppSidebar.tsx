@@ -5,7 +5,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from '@/components/ui/sidebar'
-import { Home, PlusCircleIcon, List, Lock, LogIn } from 'lucide-react'
+import { Home, PlusCircleIcon, List, LogIn } from 'lucide-react'
 
 const items = [
   {
@@ -27,11 +27,6 @@ const items = [
     title: 'Login',
     url: '/login',
     icon: LogIn,
-  },
-  {
-    title: 'Protected',
-    url: '/protected',
-    icon: Lock,
   },
 ]
 
