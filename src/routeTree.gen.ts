@@ -9,7 +9,9 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as YourListRouteImport } from './routes/your-list'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as AddJobRouteImport } from './routes/add-job'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as DemoTanstackQueryRouteImport } from './routes/demo/tanstack-query'
 import { Route as DemoTableRouteImport } from './routes/demo/table'
@@ -19,9 +21,19 @@ import { Route as DemoClerkRouteImport } from './routes/demo/clerk'
 import { Route as DemoApiTqTodosRouteImport } from './routes/demo/api.tq-todos'
 import { Route as DemoApiNamesRouteImport } from './routes/demo/api.names'
 
+const YourListRoute = YourListRouteImport.update({
+  id: '/your-list',
+  path: '/your-list',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AddJobRoute = AddJobRouteImport.update({
+  id: '/add-job',
+  path: '/add-job',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -67,7 +79,9 @@ const DemoApiNamesRoute = DemoApiNamesRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/add-job': typeof AddJobRoute
   '/login': typeof LoginRoute
+  '/your-list': typeof YourListRoute
   '/demo/clerk': typeof DemoClerkRoute
   '/demo/neon': typeof DemoNeonRoute
   '/demo/prisma': typeof DemoPrismaRoute
@@ -78,7 +92,9 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/add-job': typeof AddJobRoute
   '/login': typeof LoginRoute
+  '/your-list': typeof YourListRoute
   '/demo/clerk': typeof DemoClerkRoute
   '/demo/neon': typeof DemoNeonRoute
   '/demo/prisma': typeof DemoPrismaRoute
@@ -90,7 +106,9 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/add-job': typeof AddJobRoute
   '/login': typeof LoginRoute
+  '/your-list': typeof YourListRoute
   '/demo/clerk': typeof DemoClerkRoute
   '/demo/neon': typeof DemoNeonRoute
   '/demo/prisma': typeof DemoPrismaRoute
@@ -103,7 +121,9 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/add-job'
     | '/login'
+    | '/your-list'
     | '/demo/clerk'
     | '/demo/neon'
     | '/demo/prisma'
@@ -114,7 +134,9 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/add-job'
     | '/login'
+    | '/your-list'
     | '/demo/clerk'
     | '/demo/neon'
     | '/demo/prisma'
@@ -125,7 +147,9 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/add-job'
     | '/login'
+    | '/your-list'
     | '/demo/clerk'
     | '/demo/neon'
     | '/demo/prisma'
@@ -137,7 +161,9 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AddJobRoute: typeof AddJobRoute
   LoginRoute: typeof LoginRoute
+  YourListRoute: typeof YourListRoute
   DemoClerkRoute: typeof DemoClerkRoute
   DemoNeonRoute: typeof DemoNeonRoute
   DemoPrismaRoute: typeof DemoPrismaRoute
@@ -149,11 +175,25 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/your-list': {
+      id: '/your-list'
+      path: '/your-list'
+      fullPath: '/your-list'
+      preLoaderRoute: typeof YourListRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/login': {
       id: '/login'
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/add-job': {
+      id: '/add-job'
+      path: '/add-job'
+      fullPath: '/add-job'
+      preLoaderRoute: typeof AddJobRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -217,7 +257,9 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AddJobRoute: AddJobRoute,
   LoginRoute: LoginRoute,
+  YourListRoute: YourListRoute,
   DemoClerkRoute: DemoClerkRoute,
   DemoNeonRoute: DemoNeonRoute,
   DemoPrismaRoute: DemoPrismaRoute,
