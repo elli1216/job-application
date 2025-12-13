@@ -1,4 +1,6 @@
 import { Link } from '@tanstack/react-router'
+import { ModeToggle } from './mode-toggle'
+
 export default function Header() {
 
   return (
@@ -9,6 +11,7 @@ export default function Header() {
             Job App Tracker
           </Link>
         </h1>
+        <ModeToggle />
       </header>
     </>
   )
