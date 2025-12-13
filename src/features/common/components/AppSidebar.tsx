@@ -1,11 +1,13 @@
 import {
   Sidebar,
   SidebarContent,
+  SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
 } from '@/components/ui/sidebar'
 import { Home, PlusCircleIcon, List } from 'lucide-react'
+import { useAuth } from '@/hooks/use-auth'
 
 const items = [
   {
@@ -19,22 +21,27 @@ const items = [
     icon: PlusCircleIcon,
   },
   {
-    title: 'Job List',
+    title: 'Your List',
     url: '#',
     icon: List,
   },
 ]
 
 export function AppSidebar() {
+  const { user } = useAuth()
+
   return (
-    <Sidebar collapsible="icon">
+    <Sidebar collapsible="offcanvas">
       <SidebarContent>
-        <SidebarMenu className="pt-10" aria-label="Main Menu">
+        <SidebarHeader>
+          <h2 className="text-2xl font-bold">{user?.fullName}</h2>
+        </SidebarHeader>
+        <SidebarMenu className="pt-4 px-2 gap-4" aria-label="Main Menu">
           {items.map((item) => (
             <SidebarMenuItem key={item.title}>
-              <SidebarMenuButton asChild>
+              <SidebarMenuButton className='p-2' asChild variant="outline" size="default">
                 <a href={item.url}>
-                  <item.icon className="ml-1 h-5 w-5" />
+                  <item.icon className="ml-1 h-8 w-8" />
                   <span>{item.title}</span>
                 </a>
               </SidebarMenuButton>
