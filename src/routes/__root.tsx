@@ -8,7 +8,18 @@ import { TanStackDevtools } from '@tanstack/react-devtools'
 
 import Header from '../features/common/components/Header'
 
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarHeader,
+  SidebarInset,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarProvider,
+} from '../components/ui/sidebar'
 import TanStackQueryDevtools from '../integrations/tanstack-query/devtools'
+
 
 import ClerkProvider from '../integrations/clerk/provider'
 
@@ -45,6 +56,13 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
   }),
 
   shellComponent: RootDocument,
+  notFoundComponent: () => {
+    return (
+      <div>
+        <p>Not Found</p>
+      </div>
+    )
+  }
 })
 
 function RootDocument({ children }: { children: React.ReactNode }) {
@@ -56,8 +74,26 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       <body>
         <ThemeProvider defaultTheme='system' storageKey='vite-ui-theme'>
           <ClerkProvider>
-            <Header />
-            {children}
+            <SidebarProvider>
+              <Sidebar collapsible='icon' >
+                <SidebarHeader>
+                  Navigation
+                </SidebarHeader>
+                <SidebarContent>
+                  <SidebarMenu>
+                    <SidebarMenuItem>
+                      <SidebarMenuButton>
+                        Link 1
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+                  </SidebarMenu>
+                </SidebarContent>
+              </Sidebar>
+              <SidebarInset>
+                <Header />
+                {children}
+              </SidebarInset>
+            </SidebarProvider>
             <TanStackDevtools
               config={{
                 position: 'bottom-right',
