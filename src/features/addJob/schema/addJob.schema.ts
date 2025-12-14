@@ -31,10 +31,3 @@ export const applicationStatuses = [
   'Accepted',
   'No_Response',
 ] as const
-
-export const jobTypes = [
-  { id: '1', name: 'Full-time' },
-  { id: '2', name: 'Part-time' },
-  { id: '3', name: 'Contract' },
-  { id: '4', name: 'Internship' },
-]
