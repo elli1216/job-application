@@ -14,10 +14,10 @@ import {
 import {
   applicationSchema,
   ApplicationSchema,
-  applicationStatuses,
 } from '../features/addJob/schema/addJob.schema'
 import { createServerFn } from '@tanstack/react-start'
 import { prisma } from '@/db'
+import { ApplicationStatus } from '@/generated/prisma/enums'
 
 const getJobTypes = createServerFn({
   method: 'GET',
@@ -31,6 +31,7 @@ export const Route = createFileRoute('/add-job')({
     const jobTypes = await getJobTypes()
     return { jobTypes }
   },
+  pendingComponent: () => <div>Loading...</div>,
 })
 
 function RouteComponent() {
@@ -43,7 +44,7 @@ function RouteComponent() {
   } = useForm<ApplicationSchema>({
     resolver: zodResolver(applicationSchema),
     defaultValues: {
-      status: 'To_Apply',
+      status: ApplicationStatus.To_Apply,
       job_link: '',
       notes: '',
       company_name: '',
@@ -132,7 +133,7 @@ function RouteComponent() {
                         <SelectValue placeholder="Select a status" />
                       </SelectTrigger>
                       <SelectContent>
-                        {applicationStatuses.map((status) => (
+                        {Object.values(ApplicationStatus).map((status) => (
                           <SelectItem key={status} value={status}>
                             {status.replace(/_/g, ' ')}
                           </SelectItem>
