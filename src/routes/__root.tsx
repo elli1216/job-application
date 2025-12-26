@@ -16,6 +16,7 @@ import type { QueryClient } from '@tanstack/react-query'
 
 import { ThemeProvider } from '../features/common/components/theme-provider'
 import { Button } from '@/components/ui/button'
+import { UserSync } from '../features/auth/components/UserSync'
 
 interface MyRouterContext {
   queryClient: QueryClient
@@ -65,6 +66,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       <body>
         <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
           <ClerkProvider>
+            <UserSync />
             {children}
             <TanStackDevtools
               config={{
