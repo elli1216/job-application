@@ -29,6 +29,19 @@ const columns = [
     header: 'Status',
     cell: (info) => info.getValue(),
   }),
+  columnHelper.accessor('job_link', {
+    header: 'Job Link',
+    cell: (info) => {
+      const url = info.getValue()
+      return url ? (
+        <a href={url} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">{url}</a>
+      ) : "Not provided"
+    }
+  }),
+  columnHelper.accessor('updatedAt', {
+    header: 'Updated At',
+    cell: (info) => <span>{info.getValue() ? new Date(info.getValue()!).toLocaleDateString() : 'N/A'}</span>,
+  }),
 ]
 
 export default function ApplicationTable({ applicationList }: { applicationList: Application[] }) {
