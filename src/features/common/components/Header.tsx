@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button'
 import { SignOutButton } from '@clerk/clerk-react'
 import { LogOut } from 'lucide-react'
 
-export default function Header() {
+export default function Header({ showAuth = true }: { showAuth?: boolean }) {
   return (
     <>
       <header className="p-4 flex items-center bg-accent text-content shadow-lg">
@@ -18,11 +18,13 @@ export default function Header() {
           </div>
           <div className="flex items-center gap-2">
             <ModeToggle />
-            <SignOutButton>
-              <Button variant="outline">
-                <LogOut className="h-4 w-4" />
-              </Button>
-            </SignOutButton>
+            {showAuth && (
+              <SignOutButton>
+                <Button variant="outline">
+                  <LogOut className="h-4 w-4" />
+                </Button>
+              </SignOutButton>
+            )}
           </div>
         </div>
       </header>

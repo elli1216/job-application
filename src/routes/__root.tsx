@@ -17,9 +17,10 @@ import appCss from '../styles.css?url'
 import { ThemeProvider } from '../features/common/components/theme-provider'
 import { UserSync } from '../features/auth/components/UserSync'
 import type { QueryClient } from '@tanstack/react-query'
-import { Button } from '@/components/ui/button'
 import { Loading } from '@/features/common/components/Loading'
 import { HomeLayout } from '@/features/common/components/HomeLayout'
+import NotFound from '@/features/common/components/NotFound'
+import ErrorComponent from '@/features/common/components/Error'
 
 interface MyRouterContext {
   queryClient: QueryClient
@@ -50,14 +51,14 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
   shellComponent: RootDocument,
   notFoundComponent: () => {
     return (
-      <div className="flex flex-col gap-4 justify-center items-center h-screen">
-        <p className="text-lg font-semibold">404: Page Not Found</p>
-        <Button className="ml-4" asChild>
-          <a href="/">Go Home</a>
-        </Button>
-      </div>
+      <NotFound />
     )
   },
+  errorComponent: ({ error }) => {
+    return (
+      <ErrorComponent error={error} />
+    )
+  }
 })
 
 function RootDocument({ children }: { children: React.ReactNode }) {
