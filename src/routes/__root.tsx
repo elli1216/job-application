@@ -18,6 +18,7 @@ import { ThemeProvider } from '../features/common/components/theme-provider'
 import { UserSync } from '../features/auth/components/UserSync'
 import type { QueryClient } from '@tanstack/react-query'
 import { Button } from '@/components/ui/button'
+import { Loading } from '@/features/common/components/Loading'
 
 interface MyRouterContext {
   queryClient: QueryClient
@@ -90,11 +91,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
               />
             </ClerkProvider>
           </ThemeProvider>
-        ) : (
-          <div className="flex items-center justify-center min-h-screen">
-            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
-          </div>
-        )}
+        ) : <Loading />}
         <Scripts />
       </body>
     </html>
