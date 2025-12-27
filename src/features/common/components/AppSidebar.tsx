@@ -6,26 +6,35 @@ import {
   SidebarMenuItem,
 } from '@/components/ui/sidebar'
 import { Home, PlusCircleIcon, List } from 'lucide-react'
+import { useNavigate } from '@tanstack/react-router'
 
 const items = [
   {
     title: 'Home',
-    url: '/',
+    to: '/',
     icon: Home,
   },
   {
     title: 'Add New Job',
-    url: '/add-job',
+    to: '/add-job',
     icon: PlusCircleIcon,
   },
   {
     title: 'Your List',
-    url: '/your-list',
+    to: '/your-list',
     icon: List,
   },
 ]
 
 export function AppSidebar() {
+  const navigate = useNavigate();
+
+  const redirectTo = (to: string) => {
+    navigate({
+      to
+    });
+  }
+
   return (
     <Sidebar collapsible="offcanvas">
       <SidebarContent>
@@ -34,14 +43,12 @@ export function AppSidebar() {
             <SidebarMenuItem key={item.title}>
               <SidebarMenuButton
                 className="p-2"
-                asChild
                 variant="outline"
                 size="default"
+                onClick={() => redirectTo(item.to)}
               >
-                <a href={item.url}>
-                  <item.icon className="ml-1 h-8 w-8" />
-                  <span>{item.title}</span>
-                </a>
+                <item.icon className="ml-1 h-8 w-8" />
+                <span>{item.title}</span>
               </SidebarMenuButton>
             </SidebarMenuItem>
           ))}

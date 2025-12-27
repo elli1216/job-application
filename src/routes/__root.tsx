@@ -1,5 +1,6 @@
 import {
   HeadContent,
+  Outlet,
   Scripts,
   createRootRouteWithContext,
 } from '@tanstack/react-router'
@@ -61,7 +62,7 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
   }
 })
 
-function RootDocument({ children }: { children: React.ReactNode }) {
+function RootDocument() {
   const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
@@ -79,7 +80,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
             <ClerkProvider>
               <HomeLayout>
                 <UserSync />
-                {children}
+                <Outlet />
                 <TanStackDevtools
                   config={{
                     position: 'bottom-right',
