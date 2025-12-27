@@ -6,6 +6,9 @@ import {
 } from '@tanstack/react-table'
 import { fuzzyFilter } from '@/features/common/utils/table.utils'
 import { Application } from '@/routes/your-list'
+import { FileX } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+import { useNavigate } from '@tanstack/react-router';
 
 const columnHelper = createColumnHelper<Application>()
 
@@ -29,12 +32,20 @@ const columns = [
 ]
 
 export default function ApplicationTable({ applicationList }: { applicationList: Application[] }) {
+  const navigate = useNavigate();
   const table = useReactTable<Application>({
     data: applicationList,
     columns,
     getCoreRowModel: getCoreRowModel(),
     filterFns: { fuzzy: fuzzyFilter },
   })
+
+  const redirectToAddApplication = () => {
+    navigate({
+      to: '/add-job'
+    });
+  }
+
   return (
     <div className="rounded-md border">
       <table className="w-full text-sm text-left">
@@ -80,8 +91,12 @@ export default function ApplicationTable({ applicationList }: { applicationList:
             ))
           ) : (
             <tr>
-              <td colSpan={columns.length} className="h-24 text-center">
-                No records.
+              <td colSpan={columns.length} className="h-full p-10 text-center">
+                <FileX className="mx-auto p-4 size-20 text-muted-foreground" />
+                <div className='flex flex-col justify-center items-center'>
+                  <span className='text-2xl font-bold text-muted-foreground'>No records yet.</span>
+                  <Button onClick={redirectToAddApplication} className="mt-4 max-w-xs hover:cursor-pointer" variant="secondary">Add your first application</Button>
+                </div>
               </td>
             </tr>
           )}
