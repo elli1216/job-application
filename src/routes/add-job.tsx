@@ -14,45 +14,10 @@ import {
   applicationSchema,
   ApplicationSchema,
 } from '../features/addJob/schema/addJob.schema'
-import { createServerFn } from '@tanstack/react-start'
-import { prisma } from '@/db'
 import { ApplicationStatus } from '@/generated/prisma/enums'
 import { Loading } from '@/features/common/components/Loading'
 import { useAuth } from '../hooks/use-auth'
-import { z } from 'zod'
-
-const getJobTypes = createServerFn({
-  method: 'GET',
-}).handler(async () => {
-  return await prisma.jobTypes.findMany()
-})
-
-const addJob = createServerFn({ method: 'POST' })
-  .inputValidator((data: unknown) =>
-    applicationSchema.extend({ clerkId: z.string() }).parse(data),
-  )
-  .handler(async ({ data }) => {
-    const user = await prisma.users.findUnique({
-      where: { clerkId: data.clerkId },
-    })
-
-    if (!user) {
-      throw new Error('User not found')
-    }
-
-    return await prisma.applications.create({
-      data: {
-        company_name: data.company_name,
-        job_title: data.job_title,
-        date_applied: new Date(data.date_applied),
-        status: data.status,
-        job_link: data.job_link || '',
-        notes: data.notes || '',
-        jobTypeId: data.jobTypeId,
-        userId: user.uuid,
-      },
-    })
-  })
+import { addJob, getJobTypes } from '../features/addJob/server/addJob.server'
 
 export const Route = createFileRoute('/add-job')({
   component: RouteComponent,

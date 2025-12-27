@@ -5,7 +5,7 @@ import {
   useReactTable,
 } from '@tanstack/react-table'
 import { fuzzyFilter } from '@/features/common/utils/table.utils'
-import { Application } from '@/routes/your-list'
+import { Application } from '@/features/yourList/server/application.server'
 import { FileX } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useNavigate } from '@tanstack/react-router';
