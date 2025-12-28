@@ -9,7 +9,7 @@ import {
   Application,
   updateApplicationStatus,
 } from '@/features/yourList/server/application.server'
-import { FileX } from 'lucide-react'
+import { FilePen, FileX, Trash2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useNavigate } from '@tanstack/react-router'
 import {
@@ -71,68 +71,79 @@ const StatusCell = ({
   )
 }
 
-const columns = [
-  columnHelper.accessor('company_name', {
-    header: 'Company Name',
-    cell: (info) => info.getValue(),
-  }),
-  columnHelper.accessor('job_title', {
-    header: 'Job Title',
-    cell: (info) => info.getValue(),
-  }),
-  columnHelper.accessor('jobType.name', {
-    header: 'Job Type',
-    cell: (info) => info.getValue(),
-  }),
-  columnHelper.accessor('date_applied', {
-    header: 'Date Applied',
-    cell: (info) => new Date(info.getValue()).toLocaleDateString(),
-  }),
-  columnHelper.accessor('status', {
-    header: 'Status',
-    cell: (info) => (
-      <StatusCell
-        status={info.getValue()}
-        applicationId={info.row.original.uuid}
-      />
-    ),
-  }),
-  columnHelper.accessor('job_link', {
-    header: 'Job Link',
-    cell: (info) => {
-      const url = info.getValue()
-      return url ? (
-        <a
-          href={url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-blue-600 hover:underline"
-        >
-          {url}
-        </a>
-      ) : (
-        'Not provided'
-      )
-    },
-  }),
-  columnHelper.accessor('updatedAt', {
-    header: 'Updated At',
-    cell: (info) => (
-      <span>
-        {info.getValue()
-          ? new Date(info.getValue()!).toLocaleDateString()
-          : 'N/A'}
-      </span>
-    ),
-  }),
-]
-
 export default function ApplicationTable({
   applicationList,
 }: {
   applicationList: Application[]
 }) {
   const navigate = useNavigate()
+
+  const columns = [
+    columnHelper.accessor('company_name', {
+      header: 'Company Name',
+      cell: (info) => info.getValue(),
+    }),
+    columnHelper.accessor('job_title', {
+      header: 'Job Title',
+      cell: (info) => info.getValue(),
+    }),
+    columnHelper.accessor('jobType.name', {
+      header: 'Job Type',
+      cell: (info) => info.getValue(),
+    }),
+    columnHelper.accessor('date_applied', {
+      header: 'Date Applied',
+      cell: (info) => new Date(info.getValue()).toLocaleDateString(),
+    }),
+    columnHelper.accessor('status', {
+      header: 'Status',
+      cell: (info) => (
+        <StatusCell
+          status={info.getValue()}
+          applicationId={info.row.original.uuid}
+        />
+      ),
+    }),
+    columnHelper.accessor('job_link', {
+      header: 'Job Link',
+      cell: (info) => {
+        const url = info.getValue()
+        return url ? (
+          <a
+            href={url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-600 hover:underline"
+          >
+            {url}
+          </a>
+        ) : (
+          'Not provided'
+        )
+      },
+    }),
+    columnHelper.accessor('updatedAt', {
+      header: 'Updated At',
+      cell: (info) => (
+        <span>
+          {info.getValue()
+            ? new Date(info.getValue()!).toLocaleDateString()
+            : 'N/A'}
+        </span>
+      ),
+    }),
+    columnHelper.accessor('uuid', {
+      header: '',
+      cell: (info) => (
+        <div className="flex gap-1">
+          <Button variant={'default'} onClick={() => navigate({ to: `/edit-job/${info.getValue()}` })}><FilePen /></Button>
+          <Button variant={'destructive'} onClick={() => { console.log('Delete', info.getValue()) }}><Trash2 /></Button>
+        </div>
+      ),
+    }),
+  ]
+
+
   const table = useReactTable<Application>({
     data: applicationList,
     columns,

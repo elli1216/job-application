@@ -13,13 +13,6 @@ import { Route as YourListRouteImport } from './routes/your-list'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as AddJobRouteImport } from './routes/add-job'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as DemoTanstackQueryRouteImport } from './routes/demo/tanstack-query'
-import { Route as DemoTableRouteImport } from './routes/demo/table'
-import { Route as DemoPrismaRouteImport } from './routes/demo/prisma'
-import { Route as DemoNeonRouteImport } from './routes/demo/neon'
-import { Route as DemoClerkRouteImport } from './routes/demo/clerk'
-import { Route as DemoApiTqTodosRouteImport } from './routes/demo/api.tq-todos'
-import { Route as DemoApiNamesRouteImport } from './routes/demo/api.names'
 
 const YourListRoute = YourListRouteImport.update({
   id: '/your-list',
@@ -41,67 +34,18 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const DemoTanstackQueryRoute = DemoTanstackQueryRouteImport.update({
-  id: '/demo/tanstack-query',
-  path: '/demo/tanstack-query',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DemoTableRoute = DemoTableRouteImport.update({
-  id: '/demo/table',
-  path: '/demo/table',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DemoPrismaRoute = DemoPrismaRouteImport.update({
-  id: '/demo/prisma',
-  path: '/demo/prisma',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DemoNeonRoute = DemoNeonRouteImport.update({
-  id: '/demo/neon',
-  path: '/demo/neon',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DemoClerkRoute = DemoClerkRouteImport.update({
-  id: '/demo/clerk',
-  path: '/demo/clerk',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DemoApiTqTodosRoute = DemoApiTqTodosRouteImport.update({
-  id: '/demo/api/tq-todos',
-  path: '/demo/api/tq-todos',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DemoApiNamesRoute = DemoApiNamesRouteImport.update({
-  id: '/demo/api/names',
-  path: '/demo/api/names',
-  getParentRoute: () => rootRouteImport,
-} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/add-job': typeof AddJobRoute
   '/login': typeof LoginRoute
   '/your-list': typeof YourListRoute
-  '/demo/clerk': typeof DemoClerkRoute
-  '/demo/neon': typeof DemoNeonRoute
-  '/demo/prisma': typeof DemoPrismaRoute
-  '/demo/table': typeof DemoTableRoute
-  '/demo/tanstack-query': typeof DemoTanstackQueryRoute
-  '/demo/api/names': typeof DemoApiNamesRoute
-  '/demo/api/tq-todos': typeof DemoApiTqTodosRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/add-job': typeof AddJobRoute
   '/login': typeof LoginRoute
   '/your-list': typeof YourListRoute
-  '/demo/clerk': typeof DemoClerkRoute
-  '/demo/neon': typeof DemoNeonRoute
-  '/demo/prisma': typeof DemoPrismaRoute
-  '/demo/table': typeof DemoTableRoute
-  '/demo/tanstack-query': typeof DemoTanstackQueryRoute
-  '/demo/api/names': typeof DemoApiNamesRoute
-  '/demo/api/tq-todos': typeof DemoApiTqTodosRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -109,54 +53,13 @@ export interface FileRoutesById {
   '/add-job': typeof AddJobRoute
   '/login': typeof LoginRoute
   '/your-list': typeof YourListRoute
-  '/demo/clerk': typeof DemoClerkRoute
-  '/demo/neon': typeof DemoNeonRoute
-  '/demo/prisma': typeof DemoPrismaRoute
-  '/demo/table': typeof DemoTableRoute
-  '/demo/tanstack-query': typeof DemoTanstackQueryRoute
-  '/demo/api/names': typeof DemoApiNamesRoute
-  '/demo/api/tq-todos': typeof DemoApiTqTodosRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths:
-    | '/'
-    | '/add-job'
-    | '/login'
-    | '/your-list'
-    | '/demo/clerk'
-    | '/demo/neon'
-    | '/demo/prisma'
-    | '/demo/table'
-    | '/demo/tanstack-query'
-    | '/demo/api/names'
-    | '/demo/api/tq-todos'
+  fullPaths: '/' | '/add-job' | '/login' | '/your-list'
   fileRoutesByTo: FileRoutesByTo
-  to:
-    | '/'
-    | '/add-job'
-    | '/login'
-    | '/your-list'
-    | '/demo/clerk'
-    | '/demo/neon'
-    | '/demo/prisma'
-    | '/demo/table'
-    | '/demo/tanstack-query'
-    | '/demo/api/names'
-    | '/demo/api/tq-todos'
-  id:
-    | '__root__'
-    | '/'
-    | '/add-job'
-    | '/login'
-    | '/your-list'
-    | '/demo/clerk'
-    | '/demo/neon'
-    | '/demo/prisma'
-    | '/demo/table'
-    | '/demo/tanstack-query'
-    | '/demo/api/names'
-    | '/demo/api/tq-todos'
+  to: '/' | '/add-job' | '/login' | '/your-list'
+  id: '__root__' | '/' | '/add-job' | '/login' | '/your-list'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -164,13 +67,6 @@ export interface RootRouteChildren {
   AddJobRoute: typeof AddJobRoute
   LoginRoute: typeof LoginRoute
   YourListRoute: typeof YourListRoute
-  DemoClerkRoute: typeof DemoClerkRoute
-  DemoNeonRoute: typeof DemoNeonRoute
-  DemoPrismaRoute: typeof DemoPrismaRoute
-  DemoTableRoute: typeof DemoTableRoute
-  DemoTanstackQueryRoute: typeof DemoTanstackQueryRoute
-  DemoApiNamesRoute: typeof DemoApiNamesRoute
-  DemoApiTqTodosRoute: typeof DemoApiTqTodosRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -203,55 +99,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/demo/tanstack-query': {
-      id: '/demo/tanstack-query'
-      path: '/demo/tanstack-query'
-      fullPath: '/demo/tanstack-query'
-      preLoaderRoute: typeof DemoTanstackQueryRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/demo/table': {
-      id: '/demo/table'
-      path: '/demo/table'
-      fullPath: '/demo/table'
-      preLoaderRoute: typeof DemoTableRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/demo/prisma': {
-      id: '/demo/prisma'
-      path: '/demo/prisma'
-      fullPath: '/demo/prisma'
-      preLoaderRoute: typeof DemoPrismaRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/demo/neon': {
-      id: '/demo/neon'
-      path: '/demo/neon'
-      fullPath: '/demo/neon'
-      preLoaderRoute: typeof DemoNeonRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/demo/clerk': {
-      id: '/demo/clerk'
-      path: '/demo/clerk'
-      fullPath: '/demo/clerk'
-      preLoaderRoute: typeof DemoClerkRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/demo/api/tq-todos': {
-      id: '/demo/api/tq-todos'
-      path: '/demo/api/tq-todos'
-      fullPath: '/demo/api/tq-todos'
-      preLoaderRoute: typeof DemoApiTqTodosRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/demo/api/names': {
-      id: '/demo/api/names'
-      path: '/demo/api/names'
-      fullPath: '/demo/api/names'
-      preLoaderRoute: typeof DemoApiNamesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
   }
 }
 
@@ -260,13 +107,6 @@ const rootRouteChildren: RootRouteChildren = {
   AddJobRoute: AddJobRoute,
   LoginRoute: LoginRoute,
   YourListRoute: YourListRoute,
-  DemoClerkRoute: DemoClerkRoute,
-  DemoNeonRoute: DemoNeonRoute,
-  DemoPrismaRoute: DemoPrismaRoute,
-  DemoTableRoute: DemoTableRoute,
-  DemoTanstackQueryRoute: DemoTanstackQueryRoute,
-  DemoApiNamesRoute: DemoApiNamesRoute,
-  DemoApiTqTodosRoute: DemoApiTqTodosRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
