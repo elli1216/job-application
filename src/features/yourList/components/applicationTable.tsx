@@ -24,6 +24,11 @@ import {
 import { ApplicationStatus } from '@/generated/prisma/enums'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
+import {
+  AlertDialog,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
+import AlertDialogDelete from './alertDialog'
 
 const columnHelper = createColumnHelper<Application>()
 
@@ -69,6 +74,11 @@ const StatusCell = ({
       </SelectContent>
     </Select>
   )
+}
+
+const onDelete = (applicationId: string) => {
+  console.log('Delete', applicationId)
+  toast.error('Delete functionality not implemented yet')
 }
 
 export default function ApplicationTable({
@@ -137,7 +147,12 @@ export default function ApplicationTable({
       cell: (info) => (
         <div className="flex gap-1">
           <Button variant={'default'} onClick={() => navigate({ to: `/edit-job/${info.getValue()}` })}><FilePen /></Button>
-          <Button variant={'destructive'} onClick={() => { console.log('Delete', info.getValue()) }}><Trash2 /></Button>
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Button variant={'destructive'}><Trash2 /></Button>
+            </AlertDialogTrigger>
+            <AlertDialogDelete onClick={() => onDelete(info.getValue())} />
+          </AlertDialog>
         </div>
       ),
     }),
