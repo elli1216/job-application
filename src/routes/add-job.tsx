@@ -70,7 +70,7 @@ function RouteComponent() {
   }
 
   return (
-    <div className="flex justify-center w-full">
+    <div className="flex justify-center w-full pt-4">
       <div className="p-4 w-full md:w-2/3">
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           <div>
