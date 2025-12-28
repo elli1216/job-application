@@ -18,6 +18,7 @@ import { ApplicationStatus } from '@/generated/prisma/enums'
 import { Loading } from '@/features/common/components/Loading'
 import { useAuth } from '../hooks/use-auth'
 import { addJob, getJobTypes } from '../features/addJob/server/addJob.server'
+import { toast } from 'sonner'
 
 export const Route = createFileRoute('/add-job')({
   component: RouteComponent,
@@ -60,6 +61,7 @@ function RouteComponent() {
           clerkId: user.id,
         },
       })
+      toast.success('Job application added successfully')
       navigate({ to: '/your-list' })
     } catch (error) {
       console.log(data)
