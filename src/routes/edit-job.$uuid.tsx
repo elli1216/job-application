@@ -82,7 +82,7 @@ function JobForm({ data, jobTypes, user }: { data: Applications, jobTypes: JobTy
     },
   })
 
-  const onSubmit = async (formData: ApplicationSchema) => {
+  const onSubmit = (formData: ApplicationSchema) => {
     editMutation({
       data: {
         applicationData: {
@@ -92,7 +92,7 @@ function JobForm({ data, jobTypes, user }: { data: Applications, jobTypes: JobTy
         }, clerkId: user.id
       }
     })
-    await router.invalidate({ sync: true })
+    router.invalidate({ sync: true })
     navigate({ to: '/your-list' })
   }
 

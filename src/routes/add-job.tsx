@@ -75,7 +75,7 @@ function RouteComponent() {
     },
   })
 
-  const onSubmit = async (data: ApplicationSchema) => {
+  const onSubmit = (data: ApplicationSchema) => {
     if (!user?.id) return
     addMutation({
       data: {
@@ -83,7 +83,7 @@ function RouteComponent() {
         clerkId: user.id,
       },
     })
-    await router.invalidate({ sync: true })
+    router.invalidate({ sync: true })
     navigate({ to: '/your-list' })
   }
 
