@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { Controller, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { toast } from 'sonner'
@@ -44,6 +44,7 @@ function RouteComponent() {
 
 function JobForm({ data, jobTypes, user }: { data: Applications, jobTypes: JobTypes[], user: { id: string } }) {
   const navigate = useNavigate()
+  const queryClient = useQueryClient()
 
   const { formState: { errors }, register, handleSubmit, control } = useForm<ApplicationSchema>({
     resolver: zodResolver(applicationSchema),
@@ -60,8 +61,23 @@ function JobForm({ data, jobTypes, user }: { data: Applications, jobTypes: JobTy
     },
   })
 
+  const { mutate: editMutation, isPending } = useMutation({
+    mutationFn: editJob,
+    onSuccess: async () => toast.promise(
+      queryClient.invalidateQueries({ queryKey: ['applications'] }),
+      {
+        loading: 'Updating job application...',
+        success: 'Job application updated successfully',
+        error: 'Failed to update job application',
+      },
+    ),
+    onError: (error) => {
+      console.error('Failed to update job application', error)
+    },
+  })
+
   const onSubmit = async (formData: ApplicationSchema) => {
-    await editJob({
+    editMutation({
       data: {
         applicationData: {
           ...data,
@@ -70,7 +86,6 @@ function JobForm({ data, jobTypes, user }: { data: Applications, jobTypes: JobTy
         }, clerkId: user.id
       }
     })
-    toast.success('Job application updated successfully')
     navigate({ to: '/your-list' })
   }
 
@@ -215,8 +230,8 @@ function JobForm({ data, jobTypes, user }: { data: Applications, jobTypes: JobTy
             )}
           </div>
           <div className='flex gap-2'>
-            <Button onClick={() => window.history.back()} type="button">Back</Button>
-            <Button type="submit">Save Changes</Button>
+            <Button onClick={() => window.history.back()} disabled={isPending} type="button">Back</Button>
+            <Button type="submit" disabled={isPending}>Save Changes</Button>
           </div>
         </form>
       </div>

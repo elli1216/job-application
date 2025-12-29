@@ -8,7 +8,8 @@ import {
 import { useAuth } from '../hooks/use-auth'
 import { addJob, getJobTypes } from '../features/addJob/server/addJob.server'
 import type {
-  ApplicationSchema} from '../features/addJob/schema/addJob.schema';
+  ApplicationSchema
+} from '../features/addJob/schema/addJob.schema';
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import {
@@ -20,6 +21,7 @@ import {
 } from '@/components/ui/select'
 import { ApplicationStatus } from '@/generated/prisma/enums'
 import { Loading } from '@/features/common/components/Loading'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 export const Route = createFileRoute('/add-job')({
   component: RouteComponent,
@@ -34,6 +36,7 @@ function RouteComponent() {
   const { jobTypes } = Route.useLoaderData()
   const { user } = useAuth()
   const navigate = useNavigate()
+  const queryClient = useQueryClient()
   const {
     register,
     handleSubmit,
@@ -52,22 +55,30 @@ function RouteComponent() {
     },
   })
 
+  const { mutate: addMutation, isPending } = useMutation({
+    mutationFn: addJob,
+    onSuccess: async () => toast.promise(
+      queryClient.invalidateQueries({ queryKey: ['applications'] }),
+      {
+        loading: 'Adding job application...',
+        success: 'Job application added successfully',
+        error: 'Failed to add job application',
+      },
+    ),
+    onError: (error) => {
+      console.error('Failed to add job:', error)
+    },
+  })
+
   const onSubmit = async (data: ApplicationSchema) => {
     if (!user?.id) return
-
-    try {
-      await addJob({
-        data: {
-          ...data,
-          clerkId: user.id,
-        },
-      })
-      toast.success('Job application added successfully')
-      navigate({ to: '/your-list' })
-    } catch (error) {
-      console.log(data)
-      console.error('Failed to add job:', error)
-    }
+    addMutation({
+      data: {
+        ...data,
+        clerkId: user.id,
+      },
+    })
+    navigate({ to: '/your-list' })
   }
 
   return (
@@ -212,7 +223,7 @@ function RouteComponent() {
           </div>
 
           <div>
-            <Button type="submit">Add Application</Button>
+            <Button disabled={isPending} type="submit">Add Application</Button>
           </div>
         </form>
       </div>

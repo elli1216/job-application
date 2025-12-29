@@ -47,12 +47,15 @@ const StatusCell = ({
 
   const { mutate, isPending } = useMutation({
     mutationFn: updateApplicationStatus,
-    onSuccess: async () => {
-      await queryClient.invalidateQueries({ queryKey: ['applications'] })
-      toast.success('Status updated successfully')
-    },
+    onSuccess: async () => toast.promise(
+      queryClient.invalidateQueries({ queryKey: ['applications'] }),
+      {
+        loading: 'Updating status...',
+        success: 'Status updated successfully',
+        error: 'Failed to update status',
+      },
+    ),
     onError: () => {
-      toast.error('Failed to update status')
       console.error('Failed to update status')
     },
   })
@@ -91,13 +94,16 @@ export default function ApplicationTable({
 
   const { mutate: deleteMutation, isPending } = useMutation({
     mutationFn: deleteJob,
-    onSuccess: async () => {
-      await queryClient.invalidateQueries({ queryKey: ['applications'] })
-      toast.success('Job application deleted successfully')
-    },
-    onError: () => {
-      toast.error('Failed to delete job application')
-      console.error('Failed to delete job application')
+    onSuccess: async () => toast.promise(
+      queryClient.invalidateQueries({ queryKey: ['applications'] }),
+      {
+        loading: 'Deleting application...',
+        success: 'Application deleted successfully',
+        error: 'Failed to delete application',
+      },
+    ),
+    onError: (error) => {
+      console.error('Failed to delete application', error)
     },
   })
 
