@@ -20,3 +20,13 @@ export const ApplicationStatus = {
 } as const
 
 export type ApplicationStatus = (typeof ApplicationStatus)[keyof typeof ApplicationStatus]
+
+
+export const ApplicationMethod = {
+  Walk_in: 'Walk_in',
+  Online: 'Online',
+  Email: 'Email',
+  Refferal: 'Refferal'
+} as const
+
+export type ApplicationMethod = (typeof ApplicationMethod)[keyof typeof ApplicationMethod]

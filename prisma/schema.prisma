@@ -14,18 +14,20 @@ model Todo {
 }
 
 model Applications {
-  uuid         String            @id @default(uuid())
-  company_name String
-  job_title    String
-  date_applied DateTime
-  status       ApplicationStatus @default(To_Apply)
-  job_link     String            @default("")
-  notes        String            @default("")
-  userId       String
-  jobTypeId    String
-  jobType      JobTypes          @relation(fields: [jobTypeId], references: [uuid])
-  createdAt    DateTime          @default(now())
-  updatedAt    DateTime?         @updatedAt
+  uuid               String            @id @default(uuid())
+  company_name       String
+  company_location   String            @default("")
+  application_method ApplicationMethod @default(Walk_in)
+  job_title          String
+  date_applied       DateTime
+  status             ApplicationStatus @default(To_Apply)
+  job_link           String            @default("")
+  notes              String            @default("")
+  userId             String
+  jobTypeId          String
+  jobType            JobTypes          @relation(fields: [jobTypeId], references: [uuid])
+  createdAt          DateTime          @default(now())
+  updatedAt          DateTime?         @updatedAt
 
   @@index([userId])
   @@index([jobTypeId])
@@ -54,4 +56,11 @@ enum ApplicationStatus {
   Rejected
   Accepted
   No_Response
+}
+
+enum ApplicationMethod {
+  Walk_in
+  Online
+  Email
+  Refferal
 }

@@ -94,6 +94,13 @@ export type StringFilter<$PrismaModel = never> = {
   not?: Prisma.NestedStringFilter<$PrismaModel> | string
 }
 
+export type EnumApplicationMethodFilter<$PrismaModel = never> = {
+  equals?: $Enums.ApplicationMethod | Prisma.EnumApplicationMethodFieldRefInput<$PrismaModel>
+  in?: $Enums.ApplicationMethod[] | Prisma.ListEnumApplicationMethodFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ApplicationMethod[] | Prisma.ListEnumApplicationMethodFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumApplicationMethodFilter<$PrismaModel> | $Enums.ApplicationMethod
+}
+
 export type DateTimeFilter<$PrismaModel = never> = {
   equals?: Date | string | Prisma.DateTimeFieldRefInput<$PrismaModel>
   in?: Date[] | string[] | Prisma.ListDateTimeFieldRefInput<$PrismaModel>
@@ -139,6 +146,16 @@ export type StringWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedStringFilter<$PrismaModel>
   _max?: Prisma.NestedStringFilter<$PrismaModel>
+}
+
+export type EnumApplicationMethodWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ApplicationMethod | Prisma.EnumApplicationMethodFieldRefInput<$PrismaModel>
+  in?: $Enums.ApplicationMethod[] | Prisma.ListEnumApplicationMethodFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ApplicationMethod[] | Prisma.ListEnumApplicationMethodFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumApplicationMethodWithAggregatesFilter<$PrismaModel> | $Enums.ApplicationMethod
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumApplicationMethodFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumApplicationMethodFilter<$PrismaModel>
 }
 
 export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
@@ -273,6 +290,13 @@ export type NestedStringFilter<$PrismaModel = never> = {
   not?: Prisma.NestedStringFilter<$PrismaModel> | string
 }
 
+export type NestedEnumApplicationMethodFilter<$PrismaModel = never> = {
+  equals?: $Enums.ApplicationMethod | Prisma.EnumApplicationMethodFieldRefInput<$PrismaModel>
+  in?: $Enums.ApplicationMethod[] | Prisma.ListEnumApplicationMethodFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ApplicationMethod[] | Prisma.ListEnumApplicationMethodFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumApplicationMethodFilter<$PrismaModel> | $Enums.ApplicationMethod
+}
+
 export type NestedDateTimeFilter<$PrismaModel = never> = {
   equals?: Date | string | Prisma.DateTimeFieldRefInput<$PrismaModel>
   in?: Date[] | string[] | Prisma.ListDateTimeFieldRefInput<$PrismaModel>
@@ -317,6 +341,16 @@ export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedStringFilter<$PrismaModel>
   _max?: Prisma.NestedStringFilter<$PrismaModel>
+}
+
+export type NestedEnumApplicationMethodWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ApplicationMethod | Prisma.EnumApplicationMethodFieldRefInput<$PrismaModel>
+  in?: $Enums.ApplicationMethod[] | Prisma.ListEnumApplicationMethodFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ApplicationMethod[] | Prisma.ListEnumApplicationMethodFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumApplicationMethodWithAggregatesFilter<$PrismaModel> | $Enums.ApplicationMethod
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumApplicationMethodFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumApplicationMethodFilter<$PrismaModel>
 }
 
 export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {

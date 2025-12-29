@@ -85,6 +85,8 @@ export type TodoScalarFieldEnum = (typeof TodoScalarFieldEnum)[keyof typeof Todo
 export const ApplicationsScalarFieldEnum = {
   uuid: 'uuid',
   company_name: 'company_name',
+  company_location: 'company_location',
+  application_method: 'application_method',
   job_title: 'job_title',
   date_applied: 'date_applied',
   status: 'status',

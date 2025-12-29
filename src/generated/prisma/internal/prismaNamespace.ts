@@ -754,6 +754,8 @@ export type TodoScalarFieldEnum = (typeof TodoScalarFieldEnum)[keyof typeof Todo
 export const ApplicationsScalarFieldEnum = {
   uuid: 'uuid',
   company_name: 'company_name',
+  company_location: 'company_location',
+  application_method: 'application_method',
   job_title: 'job_title',
   date_applied: 'date_applied',
   status: 'status',
@@ -843,6 +845,20 @@ export type StringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 
  * Reference to a field of type 'String[]'
  */
 export type ListStringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'String[]'>
+    
+
+
+/**
+ * Reference to a field of type 'ApplicationMethod'
+ */
+export type EnumApplicationMethodFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ApplicationMethod'>
+    
+
+
+/**
+ * Reference to a field of type 'ApplicationMethod[]'
+ */
+export type ListEnumApplicationMethodFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ApplicationMethod[]'>
     
 
 
