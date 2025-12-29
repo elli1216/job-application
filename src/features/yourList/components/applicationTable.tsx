@@ -21,6 +21,7 @@ import {
 import { deleteJob } from '@/features/editJob/server/editJob.server'
 import { useAuth } from '@/hooks/use-auth'
 import StatusCell from './statusCell'
+import MethodCell from './methodCell'
 
 const columnHelper = createColumnHelper<Application>()
 
@@ -80,7 +81,12 @@ export default function ApplicationTable({
     }),
     columnHelper.accessor('application_method', {
       header: 'Application Method',
-      cell: (info) => info.getValue(),
+      cell: (info) => (
+        <MethodCell
+          method={info.getValue()}
+          applicationId={info.row.original.uuid}
+        />
+      ),
     }),
     columnHelper.accessor('status', {
       header: 'Status',
