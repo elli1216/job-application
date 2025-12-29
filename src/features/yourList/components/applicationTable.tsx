@@ -13,75 +13,16 @@ import type {
   Application
 } from '@/features/yourList/server/application.server';
 import { fuzzyFilter } from '@/features/common/utils/table.utils'
-import {
-  updateApplicationStatus,
-} from '@/features/yourList/server/application.server'
 import { Button } from '@/components/ui/button'
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue
-} from '@/components/ui/select'
-import { ApplicationStatus } from '@/generated/prisma/enums'
 import {
   AlertDialog,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import { deleteJob } from '@/features/editJob/server/editJob.server'
 import { useAuth } from '@/hooks/use-auth'
+import StatusCell from './statusCell'
 
 const columnHelper = createColumnHelper<Application>()
-
-const StatusCell = ({
-  status,
-  applicationId,
-}: {
-  status: ApplicationStatus
-  applicationId: string
-}) => {
-  const queryClient = useQueryClient()
-
-  const { mutate, isPending } = useMutation({
-    mutationFn: updateApplicationStatus,
-    onSuccess: async () => toast.promise(
-      queryClient.invalidateQueries({ queryKey: ['applications'] }),
-      {
-        loading: 'Updating status...',
-        success: 'Status updated successfully',
-        error: 'Failed to update status',
-      },
-    ),
-    onError: () => {
-      console.error('Failed to update status')
-    },
-  })
-
-  const handleValueChange = (newStatus: ApplicationStatus) => {
-    mutate({ data: { applicationId, status: newStatus } })
-  }
-
-  return (
-    <Select value={status} onValueChange={handleValueChange} disabled={isPending}>
-      <SelectTrigger className="w-fit">
-        <SelectValue placeholder={status} />
-      </SelectTrigger>
-      <SelectContent>
-        <SelectGroup>
-          <SelectLabel>Change Status</SelectLabel>
-          {Object.values(ApplicationStatus).map((s) => (
-            <SelectItem key={s} value={s}>
-              {s}
-            </SelectItem>
-          ))}
-        </SelectGroup>
-      </SelectContent>
-    </Select>
-  )
-}
 
 export default function ApplicationTable({
   applicationList,
@@ -161,7 +102,7 @@ export default function ApplicationTable({
             rel="noopener noreferrer"
             className="text-blue-600 hover:underline"
           >
-            {url}
+            View
           </a>
         ) : (
           'Not provided'
