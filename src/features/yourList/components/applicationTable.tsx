@@ -10,7 +10,8 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
 import AlertDialogDelete from './alertDialog'
 import type {
-  Application} from '@/features/yourList/server/application.server';
+  Application
+} from '@/features/yourList/server/application.server';
 import { fuzzyFilter } from '@/features/common/utils/table.utils'
 import {
   updateApplicationStatus,
@@ -30,6 +31,8 @@ import {
   AlertDialog,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
+import { deleteJob } from '@/features/editJob/server/editJob.server'
+import { useAuth } from '@/hooks/use-auth'
 
 const columnHelper = createColumnHelper<Application>()
 
@@ -77,17 +80,35 @@ const StatusCell = ({
   )
 }
 
-const onDelete = (applicationId: string) => {
-  console.log('Delete', applicationId)
-  toast.error('Delete functionality not implemented yet')
-}
-
 export default function ApplicationTable({
   applicationList,
 }: {
   applicationList: Array<Application>
 }) {
+  const { user } = useAuth()
   const navigate = useNavigate()
+  const queryClient = useQueryClient()
+
+  const { mutate: deleteMutation, isPending } = useMutation({
+    mutationFn: deleteJob,
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ['applications'] })
+      toast.success('Job application deleted successfully')
+    },
+    onError: () => {
+      toast.error('Failed to delete job application')
+      console.error('Failed to delete job application')
+    },
+  })
+
+  const onDelete = async (applicationId: string, clerkId: string | undefined) => {
+    if (!clerkId) {
+      toast.error('User not authenticated')
+      return
+    }
+
+    deleteMutation({ data: { applicationId, clerkId } })
+  }
 
   const columns = [
     columnHelper.accessor('company_name', {
@@ -147,12 +168,12 @@ export default function ApplicationTable({
       header: '',
       cell: (info) => (
         <div className="flex gap-1">
-          <Button variant={'default'} onClick={() => navigate({ to: `/edit-job/${info.getValue()}` })}><FilePen /></Button>
+          <Button variant={'default'} disabled={isPending} onClick={() => navigate({ to: `/edit-job/${info.getValue()}` })}><FilePen /></Button>
           <AlertDialog>
             <AlertDialogTrigger asChild>
-              <Button variant={'destructive'}><Trash2 /></Button>
+              <Button variant={'destructive'} disabled={isPending}><Trash2 /></Button>
             </AlertDialogTrigger>
-            <AlertDialogDelete onClick={() => onDelete(info.getValue())} />
+            <AlertDialogDelete onClick={() => onDelete(info.getValue(), user?.id)} />
           </AlertDialog>
         </div>
       ),

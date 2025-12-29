@@ -53,3 +53,23 @@ export const editJob = createServerFn({ method: 'POST' })
       data: application,
     }
   })
+
+export const deleteJob = createServerFn({ method: 'POST' })
+  .inputValidator((data: { applicationId: string; clerkId: string }) => data)
+  .handler(async ({ data }) => {
+    const user = await prisma.users.findUnique({
+      where: { clerkId: data.clerkId },
+    })
+    if (!user) {
+      throw new Error('User not found')
+    }
+    const deleted = await prisma.applications.deleteMany({
+      where: { uuid: data.applicationId, userId: user.uuid },
+    })
+
+    if (deleted.count === 0) {
+      throw new Error('Job application not found or not authorized')
+    }
+
+    return { success: true, message: 'Job application deleted successfully' }
+  })
