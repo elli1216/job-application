@@ -34,7 +34,9 @@ export const editJob = createServerFn({ method: 'POST' })
       },
       data: {
         company_name: data.applicationData.company_name,
+        company_location: data.applicationData.company_location,
         job_title: data.applicationData.job_title,
+        application_method: data.applicationData.application_method,
         date_applied: new Date(data.applicationData.date_applied),
         status: data.applicationData.status,
         job_link: data.applicationData.job_link,

@@ -109,7 +109,7 @@ function RouteComponent() {
             </div>
 
             <div>
-              <label htmlFor="company_name" className="block text-sm font-medium">
+              <label htmlFor="company_location" className="block text-sm font-medium">
                 Location
               </label>
               <Input

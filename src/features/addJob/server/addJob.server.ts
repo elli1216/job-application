@@ -26,7 +26,9 @@ export const addJob = createServerFn({ method: 'POST' })
     return await prisma.applications.create({
       data: {
         company_name: data.company_name,
+        company_location: data.company_location,
         job_title: data.job_title,
+        application_method: data.application_method,
         date_applied: new Date(data.date_applied),
         status: data.status,
         job_link: data.job_link || '',
