@@ -22,6 +22,8 @@ import {
 import { ApplicationStatus } from '@/generated/prisma/enums'
 import { Loading } from '@/features/common/components/Loading'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { Textarea } from '@/components/ui/textarea'
+import { useRouter } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/add-job')({
   component: RouteComponent,
@@ -37,6 +39,7 @@ function RouteComponent() {
   const { user } = useAuth()
   const navigate = useNavigate()
   const queryClient = useQueryClient()
+  const router = useRouter()
   const {
     register,
     handleSubmit,
@@ -78,6 +81,7 @@ function RouteComponent() {
         clerkId: user.id,
       },
     })
+    await router.invalidate({ sync: true })
     navigate({ to: '/your-list' })
   }
 
@@ -209,11 +213,11 @@ function RouteComponent() {
             <label htmlFor="notes" className="block text-sm font-medium">
               Notes
             </label>
-            <textarea
+            <Textarea
               id="notes"
-              rows={4}
+              rows={5}
               {...register('notes')}
-              className="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+              className="mt-1 block w-full shadow-sm sm:text-sm rounded-md"
             />
             {errors.notes && (
               <p className="text-sm text-red-600 mt-1">

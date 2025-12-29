@@ -15,6 +15,8 @@ import { Button } from '@/components/ui/button'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Applications, JobTypes } from '@/generated/prisma/client'
 import { editJob } from '@/features/editJob/server/editJob.server'
+import { Textarea } from '@/components/ui/textarea'
+import { useRouter } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/edit-job/$uuid')({
   component: RouteComponent,
@@ -45,6 +47,8 @@ function RouteComponent() {
 function JobForm({ data, jobTypes, user }: { data: Applications, jobTypes: JobTypes[], user: { id: string } }) {
   const navigate = useNavigate()
   const queryClient = useQueryClient()
+  const router = useRouter()
+
 
   const { formState: { errors }, register, handleSubmit, control } = useForm<ApplicationSchema>({
     resolver: zodResolver(applicationSchema),
@@ -86,6 +90,7 @@ function JobForm({ data, jobTypes, user }: { data: Applications, jobTypes: JobTy
         }, clerkId: user.id
       }
     })
+    await router.invalidate({ sync: true })
     navigate({ to: '/your-list' })
   }
 
@@ -217,11 +222,11 @@ function JobForm({ data, jobTypes, user }: { data: Applications, jobTypes: JobTy
             <label htmlFor="notes" className="block text-sm font-medium">
               Notes
             </label>
-            <textarea
+            <Textarea
               id="notes"
-              rows={4}
+              rows={5}
               {...register('notes')}
-              className="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+              className="mt-1 block w-full shadow-sm sm:text-sm rounded-md"
             />
             {errors.notes && (
               <p className="text-sm text-red-600 mt-1">
