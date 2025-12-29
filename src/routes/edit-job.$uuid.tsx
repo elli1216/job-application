@@ -13,6 +13,8 @@ import { getJobTypes } from '@/features/addJob/server/addJob.server'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { Applications, JobTypes } from '@/generated/prisma/client'
+import { editJob } from '@/features/editJob/server/editJob.server'
 
 export const Route = createFileRoute('/edit-job/$uuid')({
   component: RouteComponent,
@@ -37,10 +39,10 @@ function RouteComponent() {
   if (error) return <Error error={error} />
   if (!data) return <Error error="Job not found" />
 
-  return <JobForm data={data} jobTypes={jobTypes} />
+  return <JobForm data={data} jobTypes={jobTypes} user={{ id: user?.id! }} />
 }
 
-function JobForm({ data, jobTypes }: { data: any, jobTypes: any[] }) {
+function JobForm({ data, jobTypes, user }: { data: Applications, jobTypes: JobTypes[], user: { id: string } }) {
   const navigate = useNavigate()
 
   const { formState: { errors }, register, handleSubmit, control } = useForm<ApplicationSchema>({
@@ -48,7 +50,9 @@ function JobForm({ data, jobTypes }: { data: any, jobTypes: any[] }) {
     defaultValues: {
       company_name: data.company_name,
       job_title: data.job_title,
-      date_applied: data.date_applied ? new Date(data.date_applied).toISOString().split('T')[0] : '', // Safe date parsing
+      date_applied: data.date_applied
+        ? new Date(data.date_applied).toISOString().split('T')[0]
+        : '',
       status: data.status,
       job_link: data.job_link || '',
       notes: data.notes || '',
@@ -56,10 +60,18 @@ function JobForm({ data, jobTypes }: { data: any, jobTypes: any[] }) {
     },
   })
 
-  const onSubmit = (formData: ApplicationSchema) => {
-    console.log('Form submitted with data:', formData)
+  const onSubmit = async (formData: ApplicationSchema) => {
+    await editJob({
+      data: {
+        applicationData: {
+          ...data,
+          ...formData,
+          date_applied: new Date(formData.date_applied!),
+        }, clerkId: user.id
+      }
+    })
     toast.success('Job application updated successfully')
-    navigate({ to: '/your-list' }) // Adjust route as needed
+    navigate({ to: '/your-list' })
   }
 
   return (
