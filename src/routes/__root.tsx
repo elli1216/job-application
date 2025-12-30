@@ -94,7 +94,7 @@ function RootDocument() {
             </ClerkProvider>
           </ThemeProvider>
         ) : (
-          <Loading />
+          <div className='h-screen'><Loading /></div>
         )}
         <Scripts />
       </body>

@@ -36,10 +36,13 @@ export const Route = createFileRoute('/add-job')({
 
 function RouteComponent() {
   const { jobTypes } = Route.useLoaderData()
-  const { user } = useAuth()
+  const { user, isLoaded } = useAuth()
   const navigate = useNavigate()
   const queryClient = useQueryClient()
   const router = useRouter()
+
+  if (!isLoaded) return <Loading />
+
   const {
     register,
     handleSubmit,
